@@ -30,7 +30,7 @@ namespace Weather.Models
             Weather weather1 =await _weatherDBContext.Weathers.FirstOrDefaultAsync(x=> x.CityName.ToUpper()==deleteobj.CityName.ToUpper());
             if (weather1 != null) 
             {
-                _weatherDBContext.Weathers.Remove(weather1);
+                 _weatherDBContext.Weathers.Remove(weather1);
                 await _weatherDBContext.SaveChangesAsync();
             }
             return weather1;
@@ -48,11 +48,11 @@ namespace Weather.Models
         public async Task<Weather> Update(WeatherEditViewModel model)
         {
 
-            // insert into history table
+          
             Weather weather = new Weather();
 
             weather = await _weatherDBContext.Weathers.Where(x => x.CityName.ToUpper() == model.City_Name.ToUpper()).FirstOrDefaultAsync();
-            
+            // insert into history table
             WeatherHistory weatherHistory = new WeatherHistory();
             weatherHistory.CityName = weather.CityName;
             weatherHistory.TempDate = weather.TempDate;
@@ -78,6 +78,11 @@ namespace Weather.Models
         public  async Task<List<WeatherHistory>> GetWeatherHistroy(string weatherHistorybyCityName)
         {
             return await _weatherDBContext.WeatherHistories.Where(x=> x.CityName.ToUpper() == weatherHistorybyCityName.ToUpper()).ToListAsync();
+        }
+        public async Task<List<SPProcedure>> GetSpResult(int Id)
+        {
+             List<SPProcedure> result =await _weatherDBContext.spprocedure.FromSqlRaw("exec dbo.SPWeatherInformation @WeatherID={0} ", Id).ToListAsync();
+            return result;
         }
     }
 }

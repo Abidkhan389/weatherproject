@@ -29,7 +29,7 @@ namespace Weather.Controllers
         {
             try
             {
-                var model = await _iweatherRepositroy.GetWeather(name);
+                var model = await _iweatherRepositroy.GetWeather(name); 
                 return Ok(model);
             }
             catch(Exception)
@@ -63,7 +63,7 @@ namespace Weather.Controllers
         }
 
         [HttpPost]
-        //[Route("Insert")]
+        //[Route("create")]
         public async Task<IActionResult> Post(WeatherCreateViewModel model)
         {
             if(ModelState.IsValid)
@@ -81,7 +81,7 @@ namespace Weather.Controllers
             }
             else
              return BadRequest();
-               //return StatusCode(StatusCodes.Status400BadRequest);
+              
         }
         
         [HttpPut]
@@ -108,6 +108,13 @@ namespace Weather.Controllers
             }
             else
                 return BadRequest();
+        }
+        [HttpGet]
+        [Route("GetSpresult")]
+        public async Task<IActionResult> GetSpresult(int id)
+        {
+            List<SPProcedure> result =await _iweatherRepositroy.GetSpResult(id);
+            return Ok(result);
         }
 
 

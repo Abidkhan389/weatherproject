@@ -15,6 +15,7 @@ namespace Weather.Models
         Task<Weather> GetWeatherbyid(int id);
         Task<List<Weather>> GetListWeather();
         Task<List<WeatherHistory>> GetWeatherHistroy(string weatherHistory);
+        Task<List<SPProcedure>> GetSpResult(int Id);
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Weather.ViewModels;
 
 #nullable disable
 
@@ -16,7 +17,7 @@ namespace Weather.Models
             : base(options)
         {
         }
-
+        public virtual DbSet<SPProcedure> spprocedure { get; set; }
         public virtual DbSet<Weather> Weathers { get; set; }
         public virtual DbSet<WeatherHistory> WeatherHistories { get; set; }
 
@@ -31,6 +32,7 @@ namespace Weather.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SPProcedure>(entity => { entity.HasNoKey(); });
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Weather>(entity =>
